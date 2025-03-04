@@ -9,7 +9,7 @@
 </head>
 <body class="bg-body-tertiary">
     
-    <div class="container-fluid mt-2">
+    <div class="container-fluid mt-2 col-6 d-flex align-items-center flex-column">
         <label for="">Name:</label>
         <input type="text" class="input-group" id="txtName"> <br>
         <label for="">Age:</label>
@@ -17,8 +17,17 @@
         <label for="">Email:</label>
         <input type="email" class="input-group" id="txtEmail"> <br>
         <label for="">Student Id:</label>
-        <input type="number" class="input-group" id="txtStudId"> <br>
-        <button onclick="displayPerson()" class="btn btn-primary" >Submit</button> <br> <br>
+        <input type="number" class="input-group" id="txtStudId"> <br> 
+        <label for="">Course:</label>
+        <select name="Course" id="course" class="form-select">
+            <option value="" disabled selected>Your Course:</option>
+            <option value="Information Technology">Information Technology</option>
+            <option value="Computer Science">Computer Science</option>
+            <option value="Psychology">Psychology</option>
+            <option value="Education">Education</option>
+            <option value="Accountancy">Accountancy</option>
+        </select>
+        <button onclick="displayPerson()" class="btn btn-primary mt-3" >Submit</button> <br>
     
         <table class="table table-bordered text-center">
             <thead>
@@ -28,6 +37,7 @@
                     <td>Age Category</td>
                     <td>Email</td>
                     <td>Id</td>
+                    <td>Course</td>
                     <td>Action</td>
                 </tr>
             </thead>
@@ -46,10 +56,11 @@
         let txtAge = document.getElementById("txtAge");
         let txtEmail = document.getElementById("txtEmail");
         let txtStudId = document.getElementById("txtStudId");
+        let course =  document.getElementById("course");
         let tblPerson = document.getElementById("tblPerson");
 
         function inputHandling() {
-            if (txtName.value === "" || txtStudId.value === "" || txtAge.value === ""){
+            if (txtName.value === "" || txtStudId.value === "" || txtAge.value === "" || course.value === ""){
                 alert("Fields should not have a blank");
                 return false;
             }
@@ -67,7 +78,7 @@
             if (!inputHandling()) {
                 return false;
             }
-            let objStudent = new Student(txtName.value, parseInt(txtAge.value), txtEmail.value, txtStudId.value);
+            let objStudent = new Student(txtName.value, parseInt(txtAge.value), txtEmail.value, txtStudId.value, course.value);
             arrayPerson.push(objStudent);
             console.log(arrayPerson);
             displayTable();
@@ -76,6 +87,7 @@
             txtAge.value = "";
             txtEmail.value = "";
             txtStudId.value = "";
+            course.value  = "";
         }
         function displayTable() {
             tblPerson.innerHTML = "";
@@ -89,6 +101,7 @@
                             <td>${element.getAgeCategory()}</td>
                             <td>${element.getEmail()}</td>
                             <td>${element.getId()}</td>
+                            <td>${element.getCourse()}</td>
                             <td> <button onclick="deletePerson(${index})" class="btn btn-danger"> DELETE </button> </td>
                         </tr>`
             });
@@ -99,6 +112,8 @@
                 arrayPerson.splice(index, 1);
             console.log(arrayPerson);
             displayTable();
+            } else {
+                return false;
             }
         }
     </script>
